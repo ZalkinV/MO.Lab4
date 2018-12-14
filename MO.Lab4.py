@@ -16,13 +16,17 @@ def Main():
 	print(dataFrame)
 	pass
 
-def GetFeatures(dataFrame, minUnique):
+def GetFeatures(dataFrame, minUnique= None, names= None):
 	featuresNames = []
-	for columnName in dataFrame:
-		uniqueCount = len(pandas.unique(dataFrame[columnName]))
-		if uniqueCount >= minUnique:
-			featuresNames.append(columnName)
-	
+
+	if names == None and minUnique != None:
+		for columnName in dataFrame:
+			uniqueCount = len(pandas.unique(dataFrame[columnName]))
+			if uniqueCount >= minUnique:
+				featuresNames.append(columnName)
+	elif names != None and minUnique == None:
+		featuresNames = names
+
 	return dataFrame[featuresNames]
 
 def ShowGraph(dataFrame):
