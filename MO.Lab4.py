@@ -12,7 +12,8 @@ def Main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
-	dataFrame = GetFeatures(dataFrameRaw.drop("SalePrice", axis=1), 15)
+	feauturesNames = ["Neighborhood", "LotArea", "YearBuilt"]
+	dataFrame = GetFeatures(dataFrameRaw.drop("SalePrice", axis=1), names=feauturesNames)
 	print(dataFrame)
 	pass
 
