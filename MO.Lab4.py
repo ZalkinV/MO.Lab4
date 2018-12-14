@@ -1,5 +1,6 @@
 import numpy
 import pandas
+import matplotlib.pyplot as plt
 
 def Main():
 	pandas.set_option('display.max_columns', 81) # Для отображения 81 столбца
@@ -24,4 +25,8 @@ def GetFeatures(dataFrame, minUnique):
 	
 	return dataFrame[featuresNames]
 
+def ShowGraph(dataFrame):
+	plt.plot(dataFrame.index, dataFrame["SalePrice"])
+	plt.show()
+	pass
 Main()
