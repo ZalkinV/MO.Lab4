@@ -34,7 +34,7 @@ def GetFeatures(dataFrame, minUnique= None, names= None):
 
 	if names == None and minUnique != None:
 		for columnName in dataFrame:
-			uniqueCount = len(pandas.unique(dataFrame[columnName]))
+			uniqueCount = dataFrame[columnName].nunique()
 			if uniqueCount >= minUnique:
 				featuresNames.append(columnName)
 	elif names != None and minUnique == None:
