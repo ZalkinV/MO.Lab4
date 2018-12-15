@@ -35,7 +35,7 @@ def main():
 	features_coefficients["Weight"] = hypothesis.coef_
 	print(features_coefficients)
 
-	show_graph(data_features_train["LotArea"], data_labels_train)
+	plot_graph_data(data_features_train["LotArea"], data_labels_train)
 	pass
 
 def get_features(data_frame, min_unique= None, names= None):
@@ -57,11 +57,10 @@ def calculate_error(pred, actual, type='rmsle'):
 	elif type == 'rmse':
 		return np.mean(np.square(np.subtract(pred, actual)))/2
 
-def show_graph(feature, label):
+def plot_graph_data(feature, label):
 	plt.xlabel(feature.name)
 	plt.ylabel(label.name)
 	plt.scatter(feature, label, marker='.', color='red', s=10)
-	plt.show()
 	pass
 
 main()
