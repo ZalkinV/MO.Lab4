@@ -42,11 +42,15 @@ def GetFeatures(dataFrame, minUnique= None, names= None):
 
 	return dataFrame[featuresNames]
 
-def CalculateRMLSE(pred, actual):
-	return np.sqrt(np.mean(np.power(np.log1p(pred) - np.log1p(actual), 2))) #log1p(x) == log(x + 1)
+def CalculateError(pred, actual, type='rmsle'):
+	if type == 'rmsle':
+		return np.sqrt(np.mean(np.power(np.log1p(pred) - np.log1p(actual), 2))) #log1p(x) == log(x + 1)
+	elif type == 'rmse':
+		return np.mean(np.square(np.subtract(pred, actual)))/2
 
 def ShowGraph(dataFrame):
 	plt.plot(dataFrame.index, dataFrame["SalePrice"])
 	plt.show()
 	pass
+
 Main()
