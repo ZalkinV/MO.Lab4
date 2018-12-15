@@ -18,8 +18,9 @@ def Main():
 	dataFeaturesTrain = GetFeatures(dataTrain.drop("SalePrice", axis=1), names=feauturesNames)
 	dataFeaturesTest = GetFeatures(dataTest.drop("SalePrice", axis=1), names=feauturesNames)
 		
+	ShowGraph(dataFeaturesTrain["LotArea"], dataLabelsTrain)
 
-	print(dataFrame)
+	#print(dataFrame)
 	pass
 
 def GetDataParts(data, *args):
@@ -50,8 +51,10 @@ def CalculateError(pred, actual, type='rmsle'):
 	elif type == 'rmse':
 		return np.mean(np.square(np.subtract(pred, actual)))/2
 
-def ShowGraph(dataFrame):
-	plt.plot(dataFrame.index, dataFrame["SalePrice"])
+def ShowGraph(feature, label):
+	plt.xlabel(feature.name)
+	plt.ylabel(label.name)
+	plt.scatter(feature, label, marker='.', color='red', s=10)
 	plt.show()
 	pass
 
