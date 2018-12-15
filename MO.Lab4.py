@@ -2,6 +2,7 @@ import numpy as np
 import pandas
 import matplotlib.pyplot as plt
 from sklearn import linear_model
+from sklearn.model_selection import train_test_split
 
 def main():
 	pandas.set_option('display.max_columns', 81) # Для отображения 81 столбца
@@ -13,12 +14,16 @@ def main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
+	x_train, x_test, y_train, y_test = train_test_split(data_raw.drop("SalePrice", axis=1),
+														data_raw["SalePrice"],
+														test_size=0.2,
+														random_state=0)
 	feautures_names = ["LotArea"]#["Neighborhood", "LotArea", "YearBuilt"]
-	data_train, data_test = get_data_parts(data_raw.sample(frac=1), 0.6, 0.4) # frac - доля от всего набора данных в случайном порядке
-	data_labels_train = data_train["SalePrice"]
-	data_labels_test = data_test["SalePrice"]
-	data_features_train = get_features(data_train.drop("SalePrice", axis=1), names=feautures_names)
-	data_features_test = get_features(data_test.drop("SalePrice", axis=1), names=feautures_names)
+	data_labels_train, data_labels_test = y_train[:], y_test[:]
+	del y_train, y_test 
+	data_features_train = get_features(x_train, names=feautures_names)
+	data_features_test = get_features(x_test, names=feautures_names)
+	del x_train, x_test
 
 	hypothesis = linear_model.LinearRegression()
 	hypothesis.fit(data_features_train, data_labels_train)
@@ -26,15 +31,6 @@ def main():
 
 	show_graph(data_features_train["LotArea"], data_labels_train)
 	pass
-
-def get_data_parts(data, *args):
-	parts = []
-	prev_last_row = 0
-	for frac in args:
-		curr_last_row = int(prev_last_row + len(data) * frac)
-		parts.append(data[prev_last_row:curr_last_row])
-		prev_last_row = curr_last_row
-	return parts
 
 def get_features(data_frame, min_unique= None, names= None):
 	features_names = []
