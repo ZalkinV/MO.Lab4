@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pandas
 import matplotlib.pyplot as plt
 
@@ -41,6 +41,9 @@ def GetFeatures(dataFrame, minUnique= None, names= None):
 		featuresNames = names
 
 	return dataFrame[featuresNames]
+
+def CalculateRMLSE(pred, actual):
+	return np.sqrt(np.mean(np.power(np.log1p(pred) - np.log1p(actual), 2))) #log1p(x) == log(x + 1)
 
 def ShowGraph(dataFrame):
 	plt.plot(dataFrame.index, dataFrame["SalePrice"])
