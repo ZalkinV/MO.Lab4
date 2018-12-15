@@ -18,7 +18,7 @@ def main():
 														data_raw["SalePrice"],
 														test_size=0.2,
 														random_state=0)
-	feautures_names = ["LotArea", "YearBuilt"]
+	feautures_names = ["LotArea"]
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
 	del y_train, y_test 
 	data_features_train = get_features(x_train, names=feautures_names)
@@ -36,6 +36,8 @@ def main():
 	print(features_coefficients)
 
 	plot_graph_data(data_features_train["LotArea"], data_labels_train)
+	plot_graph_hypothesis(hypothesis, data_features_train)
+	plt.show()
 	pass
 
 def get_features(data_frame, min_unique= None, names= None):
@@ -61,6 +63,11 @@ def plot_graph_data(feature, label):
 	plt.xlabel(feature.name)
 	plt.ylabel(label.name)
 	plt.scatter(feature, label, marker='.', color='red', s=10)
+	pass
+
+def plot_graph_hypothesis(hypo, feature):
+	y = [x * hypo.coef_[0] + hypo.intercept_ for x in feature.values]
+	plt.plot(feature, y)
 	pass
 
 main()
