@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 import matplotlib.pyplot as plt
+from sklearn import linear_model
 
 def main():
 	pandas.set_option('display.max_columns', 81) # Для отображения 81 столбца
@@ -18,10 +19,12 @@ def main():
 	data_labels_test = data_test["SalePrice"]
 	data_features_train = get_features(data_train.drop("SalePrice", axis=1), names=feautures_names)
 	data_features_test = get_features(data_test.drop("SalePrice", axis=1), names=feautures_names)
-		
-	show_graph(data_features_train["LotArea"], data_labels_train)
 
-	#print(dataFrame)
+	hypothesis = linear_model.LinearRegression()
+	hypothesis.fit(data_features_train, data_labels_train)
+	print("{w0} + {w1}*x".format(w0=hypothesis.intercept_, w1=hypothesis.coef_[0]))
+
+	show_graph(data_features_train["LotArea"], data_labels_train)
 	pass
 
 def get_data_parts(data, *args):
