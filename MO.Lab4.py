@@ -15,7 +15,7 @@ def Main():
 	feauturesNames = ["Neighborhood", "LotArea", "YearBuilt"]
 	dataFrame = GetFeatures(dataFrameRaw.drop("SalePrice", axis=1), names=feauturesNames)
 	dataFrameShuff = dataFrame.sample(frac=1) # frac - доля от всех набора данных в случайном порядке
-	dataTrain, dataCross, dataTest = GetDataPart(dataFrameShuff, 0.5, 0.2, 0.3)
+	dataTrain, dataCross, dataTest = GetDataParts(dataFrameShuff, 0.5, 0.2, 0.3)
 
 	print(dataFrame)
 	pass
