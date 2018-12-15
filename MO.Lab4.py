@@ -12,10 +12,12 @@ def Main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
-	feauturesNames = ["Neighborhood", "LotArea", "YearBuilt"]
-	dataFrame = GetFeatures(dataFrameRaw.drop("SalePrice", axis=1), names=feauturesNames)
-	dataFrameShuff = dataFrame.sample(frac=1) # frac - доля от всех набора данных в случайном порядке
-	dataTrain, dataCross, dataTest = GetDataParts(dataFrameShuff, 0.5, 0.2, 0.3)
+	feauturesNames = ["LotArea"]#["Neighborhood", "LotArea", "YearBuilt"]
+	dataTrain, dataTest = GetDataParts(dataFrameRaw.sample(frac=1), 0.6, 0.4) # frac - доля от всего набора данных в случайном порядке
+	dataLabelsTrain, dataLabelsTest = dataTrain["SalePrice"], dataTest["SalePrice"]
+	dataFeaturesTrain = GetFeatures(dataTrain.drop("SalePrice", axis=1), names=feauturesNames)
+	dataFeaturesTest = GetFeatures(dataTest.drop("SalePrice", axis=1), names=feauturesNames)
+		
 
 	print(dataFrame)
 	pass
