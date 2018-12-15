@@ -18,7 +18,7 @@ def main():
 														data_raw["SalePrice"],
 														test_size=0.2,
 														random_state=0)
-	feautures_names = ["LotArea"]#["Neighborhood", "LotArea", "YearBuilt"]
+	feautures_names = ["LotArea", "YearBuilt"]
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
 	del y_train, y_test 
 	data_features_train = get_features(x_train, names=feautures_names)
@@ -27,7 +27,13 @@ def main():
 
 	hypothesis = linear_model.LinearRegression()
 	hypothesis.fit(data_features_train, data_labels_train)
-	print("{w0} + {w1}*x".format(w0=hypothesis.intercept_, w1=hypothesis.coef_[0]))
+	prediction = hypothesis.predict(data_features_test)
+	print("RMSLE = {error}".format(error=calculate_error(prediction, data_labels_test)))
+
+	print("w0 =", hypothesis.intercept_)
+	features_coefficients = pandas.DataFrame(data_features_train.columns, columns=["Feature"])
+	features_coefficients["Weight"] = hypothesis.coef_
+	print(features_coefficients)
 
 	show_graph(data_features_train["LotArea"], data_labels_train)
 	pass
