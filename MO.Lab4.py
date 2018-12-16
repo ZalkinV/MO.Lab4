@@ -18,7 +18,7 @@ def main():
 														data_raw["SalePrice"],
 														test_size=0.2,
 														random_state=0)
-	feautures_names = ["LotArea"]
+	feautures_names = ["LotArea", "OverallQual", "YearBuilt", "GarageArea"]
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
 	del y_train, y_test 
 	data_features_train = get_features(x_train, names=feautures_names)
@@ -37,6 +37,7 @@ def main():
 
 	plot_graph_data(data_features_train["LotArea"], data_labels_train)
 	plot_graph_hypothesis(hypothesis, data_features_train)
+	plot_bargraph_weights(features_coefficients)
 	plt.show()
 	pass
 
@@ -68,6 +69,11 @@ def plot_graph_data(feature, label):
 def plot_graph_hypothesis(hypo, feature):
 	y = [x * hypo.coef_[0] + hypo.intercept_ for x in feature.values]
 	plt.plot(feature, y)
+	pass
+
+def plot_bargraph_weights(features_weights):
+	plt.figure(2)
+	plt.bar(features_weights["Feature"], features_weights["Weight"])
 	pass
 
 main()
