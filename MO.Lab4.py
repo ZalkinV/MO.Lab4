@@ -53,6 +53,8 @@ def preprocess_data(data_raw, min_uniq=0, exc_types=None):
 
 	uniq_column_names = (data_processing.nunique() >= min_uniq).index
 	data_processing = data_processing[uniq_column_names]
+
+	data_processing = pandas.DataFrame(preprocessing.minmax_scale(data_processing), columns=data_processing.columns)
 	return data_processing
 
 def plot_graph_data(feature, label):
