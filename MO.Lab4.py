@@ -14,15 +14,18 @@ def main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
-	x_train, x_test, y_train, y_test = train_test_split(data_raw.drop("SalePrice", axis=1),
-														data_raw["SalePrice"],
+	uniqueuness = 50
+	data_ready = data_raw.dropna(axis=1).select_dtypes(exclude=["bool", "object"])
+	uniqueuness_column = (data_ready.nunique() >= uniqueuness).index
+	data_ready = data_ready[uniqueuness_column]
+	x_train, x_test, y_train, y_test = train_test_split(data_ready.drop("SalePrice", axis=1),
+														data_ready["SalePrice"],
 														test_size=0.2,
 														random_state=0)
-	feautures_names = ["LotArea", "OverallQual", "YearBuilt", "GarageArea"]
+
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
-	del y_train, y_test 
-	data_features_train = get_features(x_train, names=feautures_names)
-	data_features_test = get_features(x_test, names=feautures_names)
+	del y_train, y_test
+	data_features_train, data_features_test = x_train[:], x_test[:]
 	del x_train, x_test
 
 	hypothesis = linear_model.LinearRegression()
@@ -40,19 +43,6 @@ def main():
 	plot_bargraph_weights(features_coefficients)
 	plt.show()
 	pass
-
-def get_features(data_frame, min_unique= None, names= None):
-	features_names = []
-
-	if names == None and min_unique != None:
-		for col_name in data_frame:
-			unique_count = data_frame[col_name].nunique()
-			if unique_count >= min_unique:
-				features_names.append(col_name)
-	elif names != None and min_unique == None:
-		features_names = names
-
-	return data_frame[features_names]
 
 def calculate_error(pred, actual, type='rmsle'):
 	if type == 'rmsle':
