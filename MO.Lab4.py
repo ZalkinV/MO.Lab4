@@ -28,7 +28,7 @@ def main():
 	hypothesis = linear_model.LinearRegression()
 	hypothesis.fit(data_features_train, data_labels_train)
 	prediction = hypothesis.predict(data_features_test)
-	print("RMSLE = {error}".format(error=calculate_error(prediction, data_labels_test)))
+	print_error(prediction, data_labels_test)
 
 	print("w0 =", hypothesis.intercept_)
 	features_coefficients = pandas.DataFrame(data_features_train.columns, columns=["Feature"])
@@ -44,6 +44,13 @@ def calculate_error(pred, actual, type='rmsle'):
 		return np.sqrt(np.mean(np.power(np.log1p(pred) - np.log1p(actual), 2))) #log1p(x) == log(x + 1)
 	elif type == 'rmse':
 		return np.mean(np.square(np.subtract(pred, actual)))/2
+	pass
+
+def print_error(predicted, actual):
+	print("RMSLE = {error}".format(error=calculate_error(predicted, actual)))
+	predicted_actual = pandas.DataFrame({"Predic" : predicted[:8], "Actual" : actual.values[:8]})
+	predicted_actual["Differ"] = predicted_actual["Predic"] - predicted_actual["Actual"]
+	print(predicted_actual, end="\n\n\n")
 	pass
 
 def preprocess_data(data_raw, min_uniq=0, exc_types=None):
