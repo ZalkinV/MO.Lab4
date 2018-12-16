@@ -15,9 +15,10 @@ def main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
-	data_ready = preprocess_data(data_raw, exc_types=["object"])
-	x_train, x_test, y_train, y_test = train_test_split(data_ready.drop("SalePrice", axis=1),
-														data_ready["SalePrice"],
+	data_label_column = data_raw["SalePrice"]
+	data_ready = preprocess_data(data_raw.drop("SalePrice", axis=1), exc_types=["object"])
+	x_train, x_test, y_train, y_test = train_test_split(data_ready,
+														data_label_column,
 														test_size=0.2,
 														random_state=0)
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
