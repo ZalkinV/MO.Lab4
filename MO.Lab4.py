@@ -3,6 +3,7 @@ import pandas
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
+from sklearn import preprocessing
 
 def main():
 	pandas.set_option('display.max_columns', 81) # Для отображения 81 столбца
@@ -14,15 +15,11 @@ def main():
 	#print(dataFrameRaw.describe(include="object")) # Получение информации о всех строках с типом object, чтобы понять уникальных значений какого параметра больше, чтобы использовать это параметр как признак
 	#print(dataFrameRaw["LotConfig"].value_counts()) # Получение количества уникальных значений для указанного столбца
 
-	uniqueuness = 50
-	data_ready = data_raw.dropna(axis=1).select_dtypes(exclude=["bool", "object"])
-	uniqueuness_column = (data_ready.nunique() >= uniqueuness).index
-	data_ready = data_ready[uniqueuness_column]
+	data_ready = preprocess_data(data_raw, exc_types=["object"])
 	x_train, x_test, y_train, y_test = train_test_split(data_ready.drop("SalePrice", axis=1),
 														data_ready["SalePrice"],
 														test_size=0.2,
 														random_state=0)
-
 	data_labels_train, data_labels_test = y_train[:], y_test[:]
 	del y_train, y_test
 	data_features_train, data_features_test = x_train[:], x_test[:]
@@ -47,6 +44,16 @@ def calculate_error(pred, actual, type='rmsle'):
 		return np.sqrt(np.mean(np.power(np.log1p(pred) - np.log1p(actual), 2))) #log1p(x) == log(x + 1)
 	elif type == 'rmse':
 		return np.mean(np.square(np.subtract(pred, actual)))/2
+	pass
+
+def preprocess_data(data_raw, min_uniq=0, exc_types=None):
+	data_processing = data_raw.copy(deep=True)
+	if exc_types is not None:
+		data_processing = data_raw.dropna(axis=1).select_dtypes(exclude=exc_types)
+
+	uniq_column_names = (data_processing.nunique() >= min_uniq).index
+	data_processing = data_processing[uniq_column_names]
+	return data_processing
 
 def plot_graph_data(feature, label):
 	plt.xlabel(feature.name)
