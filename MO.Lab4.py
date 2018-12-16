@@ -38,9 +38,7 @@ def main():
 	features_coefficients["Weight"] = hypothesis.coef_
 	print(features_coefficients)
 
-	plot_graph_data(data_features_train["LotArea"], data_labels_train)
-	plot_graph_hypothesis(hypothesis, data_features_train)
-	plot_bargraph_weights(features_coefficients)
+	features_coefficients.plot(kind="bar")
 	plt.show()
 	pass
 
@@ -54,16 +52,6 @@ def plot_graph_data(feature, label):
 	plt.xlabel(feature.name)
 	plt.ylabel(label.name)
 	plt.scatter(feature, label, marker='.', color='red', s=10)
-	pass
-
-def plot_graph_hypothesis(hypo, feature):
-	y = [x * hypo.coef_[0] + hypo.intercept_ for x in feature.values]
-	plt.plot(feature, y)
-	pass
-
-def plot_bargraph_weights(features_weights):
-	plt.figure(2)
-	plt.bar(features_weights["Feature"], features_weights["Weight"])
 	pass
 
 main()
