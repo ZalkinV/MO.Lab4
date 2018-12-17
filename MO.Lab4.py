@@ -1,6 +1,9 @@
 import numpy as np
 import pandas
 import matplotlib.pyplot as plt
+
+import xgboost as xgb
+
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
