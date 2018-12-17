@@ -24,12 +24,12 @@ def main():
 	plt.show()
 	pass
 
-def completing_lab_part1(X_train, X_test, Y_train, Y_test):
+def completing_lab_part1(X_train, X_test, y_train, y_test):
 	hypothesis = linear_model.LinearRegression()
 	print("\nHypothesis:", hypothesis)
-	hypothesis.fit(X_train, Y_train)
+	hypothesis.fit(X_train, y_train)
 	prediction = hypothesis.predict(X_test)
-	print_error(prediction, Y_test)
+	print_error(prediction, y_test)
 
 	print("w0 =", hypothesis.intercept_)
 	features_coefficients = pandas.DataFrame(X_test.columns, columns=["Feature"])
