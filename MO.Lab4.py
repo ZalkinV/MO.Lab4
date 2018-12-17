@@ -62,7 +62,7 @@ def print_error(predicted, actual):
 	predicted = predicted.astype(np.int64)
 	print("RMSLE = {error}".format(error=calculate_error(predicted, actual)))
 	accuracy = metrics.r2_score(actual, predicted)
-	print("Accuracy =", accuracy)
+	print("Accuracy = {ac:.2f}%".format(ac=accuracy * 100))
 
 	predicted_actual = pandas.DataFrame({"Predic" : predicted[:8], "Actual" : actual[:8]})
 	predicted_actual["Differ"] = predicted_actual["Predic"] - predicted_actual["Actual"]
