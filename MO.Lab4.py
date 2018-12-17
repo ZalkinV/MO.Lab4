@@ -20,6 +20,7 @@ def main():
 														random_state=0)
 
 	completing_lab_part1(X_train, X_test, y_train, y_test)
+	completing_lab_part2(X_train, X_test, y_train, y_test)
 
 	plt.show()
 	pass
@@ -33,6 +34,9 @@ def completing_lab_part1(X_train, X_test, y_train, y_test):
 	print_error(prediction, y_test)
 
 	output_hypothesis_weight(X_test.columns, hypothesis)
+	pass
+
+def completing_lab_part2(X_train, X_test, y_train, y_test):
 	pass
 
 def output_hypothesis_weight(features_names, hypothesis):
