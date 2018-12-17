@@ -27,18 +27,24 @@ def main():
 	data_features_train, data_features_test = x_train[:], x_test[:]
 	del x_train, x_test
 
+	completing_lab_part1(data_features_train, data_features_test, data_labels_train, data_labels_test)
+
+	plt.show()
+	pass
+
+def completing_lab_part1(X_train, X_test, Y_train, Y_test):
 	hypothesis = linear_model.LinearRegression()
-	hypothesis.fit(data_features_train, data_labels_train)
-	prediction = hypothesis.predict(data_features_test)
-	print_error(prediction, data_labels_test.values)
+	print("\nHypothesis:", hypothesis)
+	hypothesis.fit(X_train, Y_train)
+	prediction = hypothesis.predict(X_test)
+	print_error(prediction, Y_test)
 
 	print("w0 =", hypothesis.intercept_)
-	features_coefficients = pandas.DataFrame(data_features_train.columns, columns=["Feature"])
+	features_coefficients = pandas.DataFrame(X_test.columns, columns=["Feature"])
 	features_coefficients["Weight"] = hypothesis.coef_
 	print(features_coefficients)
 
 	features_coefficients.plot(kind="bar")
-	plt.show()
 	pass
 
 def calculate_error(pred, actual, type='rmsle'):
