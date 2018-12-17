@@ -48,9 +48,9 @@ def calculate_error(pred, actual, type='rmsle'):
 	pass
 
 def print_error(predicted, actual):
+	predicted = predicted.astype(np.int64)
 	print("RMSLE = {error}".format(error=calculate_error(predicted, actual)))
 	predicted_actual = pandas.DataFrame({"Predic" : predicted[:8], "Actual" : actual[:8]})
-	predicted_actual["Predic"] = predicted_actual["Predic"].astype(np.int64)
 	predicted_actual["Differ"] = predicted_actual["Predic"] - predicted_actual["Actual"]
 	print(predicted_actual, end="\n\n\n")
 	pass
