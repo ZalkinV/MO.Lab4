@@ -14,16 +14,12 @@ def main():
 
 	data_label_column = data_raw["SalePrice"]
 	data_ready = preprocess_data(data_raw.drop("SalePrice", axis=1), exc_types=["object"])
-	x_train, x_test, y_train, y_test = train_test_split(data_ready,
+	X_train, X_test, y_train, y_test = train_test_split(data_ready,
 														data_label_column,
 														test_size=0.2,
 														random_state=0)
-	data_labels_train, data_labels_test = y_train[:], y_test[:]
-	del y_train, y_test
-	data_features_train, data_features_test = x_train[:], x_test[:]
-	del x_train, x_test
 
-	completing_lab_part1(data_features_train, data_features_test, data_labels_train, data_labels_test)
+	completing_lab_part1(X_train, X_test, y_train, y_test)
 
 	plt.show()
 	pass
