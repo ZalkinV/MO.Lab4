@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
+from sklearn import metrics
 
 def main():
 	pandas.set_option('display.max_columns', 81) # Для отображения 81 столбца
@@ -50,6 +51,8 @@ def calculate_error(pred, actual, type='rmsle'):
 def print_error(predicted, actual):
 	predicted = predicted.astype(np.int64)
 	print("RMSLE = {error}".format(error=calculate_error(predicted, actual)))
+	print("Accuracy =", metrics.accuracy_score(actual, predicted))
+
 	predicted_actual = pandas.DataFrame({"Predic" : predicted[:8], "Actual" : actual[:8]})
 	predicted_actual["Differ"] = predicted_actual["Predic"] - predicted_actual["Actual"]
 	print(predicted_actual, end="\n\n\n")
