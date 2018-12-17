@@ -29,10 +29,15 @@ def completing_lab_part1(X_train, X_test, y_train, y_test):
 	print("\nHypothesis:", hypothesis)
 	hypothesis.fit(X_train, y_train)
 	prediction = hypothesis.predict(X_test)
+
 	print_error(prediction, y_test)
 
+	output_hypothesis_weight(X_test.columns, hypothesis)
+	pass
+
+def output_hypothesis_weight(features_names, hypothesis):
 	print("w0 =", hypothesis.intercept_)
-	features_coefficients = pandas.DataFrame(X_test.columns, columns=["Feature"])
+	features_coefficients = pandas.DataFrame(features_names, columns=["Features"])
 	features_coefficients["Weight"] = hypothesis.coef_
 	print(features_coefficients)
 
