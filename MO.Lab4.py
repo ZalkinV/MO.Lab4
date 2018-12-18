@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import xgboost as xgb
 
 from sklearn import linear_model
-from sklearn.model_selection import train_test_split
+from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn import metrics
 
@@ -17,7 +17,7 @@ def main():
 
 	data_label_column = data_raw["SalePrice"]
 	data_ready = preprocess_data(data_raw.drop("SalePrice", axis=1), exc_types=["object"])
-	X_train, X_test, y_train, y_test = train_test_split(data_ready,
+	X_train, X_test, y_train, y_test = model_selection.train_test_split(data_ready,
 														data_label_column,
 														test_size=0.2,
 														random_state=5)
