@@ -49,12 +49,16 @@ def completing_lab_part2(X_train, X_test, y_train, y_test):
 	pass
 
 def output_hypothesis_weight(features_names, hypothesis):
-	print("w0 =", hypothesis.intercept_)
 	features_coefficients = pandas.DataFrame(features_names, columns=["Features"])
-	features_coefficients["Weight"] = hypothesis.coef_
-	print(features_coefficients)
 
-	features_coefficients.plot(kind="bar")
+	if hasattr(hypothesis, "intercept_") and hasattr(hypothesis, "coef_"):
+		print("w0 =", hypothesis.intercept_)
+		features_coefficients["Weight"] = hypothesis.coef_
+	elif hasattr(hypothesis, "feature_importances_"):
+		features_coefficients["Weight"] = hypothesis.feature_importances_
+
+	print(features_coefficients)
+	features_coefficients.plot(kind='bar')
 	pass
 
 def calculate_error(pred, actual, type='rmsle'):
