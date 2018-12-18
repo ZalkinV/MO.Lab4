@@ -57,7 +57,7 @@ def output_hypothesis_weight(features_names, hypothesis):
 		print("w0 =", hypothesis.intercept_)
 		features_coefficients["Weight"] = hypothesis.coef_
 	elif hasattr(hypothesis, "feature_importances_"):
-		features_coefficients["Weight"] = hypothesis.feature_importances_
+		features_coefficients["Importance"] = hypothesis.feature_importances_
 
 	print(features_coefficients)
 	features_coefficients.plot(kind='bar')
