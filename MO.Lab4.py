@@ -40,6 +40,12 @@ def completing_lab_part1(X_train, X_test, y_train, y_test):
 	pass
 
 def completing_lab_part2(X_train, X_test, y_train, y_test):
+	hypothesis = xgb.XGBRegressor(objective="reg:linear")
+	print("\nHypothesis:", hypothesis)
+	hypothesis.fit(X_train, y_train)
+	prediction = hypothesis.predict(X_test)
+
+	print_error(prediction, y_test)
 	pass
 
 def output_hypothesis_weight(features_names, hypothesis):
