@@ -20,7 +20,7 @@ def main():
 	X_train, X_test, y_train, y_test = train_test_split(data_ready,
 														data_label_column,
 														test_size=0.2,
-														random_state=0)
+														random_state=5)
 
 	completing_lab_part1(X_train, X_test, y_train, y_test)
 	completing_lab_part2(X_train, X_test, y_train, y_test)
